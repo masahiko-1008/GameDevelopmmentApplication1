@@ -2,12 +2,15 @@
 
 #define D_KEYCODE_MAX (256)
 
+//InputControlƒNƒ‰ƒX‚ÌéŒ¾
 class InputControl
 {
+	//•Ï”éŒ¾
 private:
 	static char now_key[D_KEYCODE_MAX];
 	static char old_key[D_KEYCODE_MAX];
 
+	//ŠÖ”éŒ¾
 public:
 	static void Update();
 

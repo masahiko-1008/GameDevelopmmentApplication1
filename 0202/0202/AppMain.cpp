@@ -17,6 +17,7 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance,
 		return -1;
 	}
 
+	//メモリー取得
 	SetDrawScreen(DX_SCREEN_BACK);
 
 	GameObject* object1 = new GameObject();
@@ -29,6 +30,7 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance,
 	while (ProcessMessage() != -1 && InputControl::GetKeyUp(KEY_INPUT_ESCAPE)==
 false)
 	{
+		//更新処理
 		InputControl::Update();
 
 		object1->Update();
@@ -37,6 +39,7 @@ false)
 		//画面の初期化
 		ClearDrawScreen();
 
+		//描画処理
 		object1->Draw();
 		object2->Draw();
 
@@ -44,6 +47,7 @@ false)
 		ScreenFlip();
 	}
 
+	//メモリーの解放
 	delete object1;
 	delete object2;
 
