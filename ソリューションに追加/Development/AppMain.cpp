@@ -1,6 +1,6 @@
 #include "DxLib.h"
 #include "Utility/InputControl.h"
-#include "Scene/Scene.h
+#include "Scene/Scene.h"
 
 //メイン関数(プログラムはここから始まります。)
 int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance,
@@ -24,7 +24,7 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance,
 	int result = 0;               //終了状態情報
 
 	//描画先を裏画面から始めるように指定する
-	SetDrawScreen(DX_SCEEN_BACK);
+	SetDrawScreen(DX_SCREEN_BACK);
 
 	try
 	{
@@ -70,5 +70,5 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance,
 	DxLib_End();
 
 	//終了状態を通知
-	return result;z
+	return result;
 }
