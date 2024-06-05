@@ -1,7 +1,7 @@
 #include "Enemy.h"
 #include "DxLib.h"
 
-Enemy::Enemy() : animation_count(0),direction(0.0f)
+Enemy::Enemy() : animation_count(0), direction(0.0f)
 {
 	animation[0] = NULL;
 	animation[1] = NULL;
@@ -35,7 +35,7 @@ void Enemy::Initialize()
 	image = animation[0];
 
 	//初期進行方向の設定
-	direction = Vector2D(1.0f, -0.5f);
+	direction = Vector2D(1.0f, 0.0f);
 }
 
 //更新処理
@@ -91,12 +91,12 @@ void Enemy::Movement()
 {
 	//画面端に到達したら、進行方向を反転する
 	if (((location.x + direction.x) < box_size.x) ||
-		(640.0f - box_size.x) < (location.x + direction.x))
+		(920.0f - box_size.x) < (location.x + direction.x))
 	{
 		direction.x *= -1.0f;
 	}
 	if (((location.y + direction.y) < box_size.y) ||
-		(480.0f - box_size.y) < (location.y + direction.y))
+		(580.0f - box_size.y) < (location.y + direction.y))
 	{
 		direction.y *= -1.0f;
 	}

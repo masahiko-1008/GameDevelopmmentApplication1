@@ -19,7 +19,7 @@ void InputControl::Update()
 bool InputControl::GetKey(int key_code)
 {
 	return CheckKeyCodeRange(key_code) && (now_key[key_code] == TRUE &&
-old_key[key_code] == TRUE);
+		old_key[key_code] == TRUE);
 }
 
 //キー取得系：押した瞬間か？

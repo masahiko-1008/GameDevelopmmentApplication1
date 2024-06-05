@@ -7,7 +7,7 @@
 #define D_PIVOT_CENTER
 
 //コンストラクタ
-Scene::Scene() : objects()
+Scene::Scene() : objects(),BackGround_image(NULL)
 {
 
 }
@@ -24,6 +24,14 @@ void Scene::Initialize()
 {
 	//プレイヤーを生成する
 	CreateObject<Player>(Vector2D(320.0f, 240.0f));
+
+	BackGround_image = LoadGraph("Resource/Images/BackGround.png");
+
+	//エラーチェック
+	if (BackGround_image == -1)
+	{
+		throw("背景の画像がありません\n");
+	}
 }
 
 //更新処理
@@ -55,6 +63,8 @@ void Scene::Update()
 //描画処理
 void Scene::Draw() const
 {
+	DrawGraph(0, 0, BackGround_image, TRUE);
+
 	//シーンに存在するオブジェクトの描画処理
 	for (GameObject* obj : objects)
 	{
