@@ -21,21 +21,22 @@ void Player::Initialize()
 	//画像の読み込み
 	animation[0] = LoadGraph("Resource/Images/Tri-pilot/1.png");
 	animation[1] = LoadGraph("Resource/Images/Tri-pilot/2.png");
-	animation[1] = LoadGraph("Resource/Images/Bomb/Bomb.png");
-	animation[] = LoadGraph("Resource/Images/EnemyBullet/")
-
+	animation[2] = LoadGraph("Resource/Images/Bomb/Bomb.png");
+	animation[3] = LoadGraph("Resource/Images/Blast/1.png");
+	animation[4] = LoadGraph("Resource/Images/Blast/2.png");
+	animation[5] = LoadGraph("Resource/Images/Blast/3.png");
 
 	//エラーチェック
-	if (animation[0] == -1 || animation[1] == -1)
+	for (int i = 0; i < 6; i++)
 	{
-		throw("トリパイロットの画像がありません\n");
+		if (animation[i] == -1)
+		{
+			throw("画像がありません\n");
+		}
 	}
-
+	
 	//向きの設定
 	radian = 0.0;
-
-	//当たり判定の大きさを設定
-	box_size = 64.0;
 
 	//初期画像の設定
 	image = animation[0];

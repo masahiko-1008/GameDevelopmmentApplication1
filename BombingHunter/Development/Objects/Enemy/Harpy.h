@@ -2,16 +2,16 @@
 
 #include "../GameObject.h"
 
-class Player : public GameObject
+class Harpy : public GameObject
 {
 private:
-	int animation[6];          //アニメーション画像
-	int animation_count;       //アニメーション時間
-	int flip_flag;             //反転フラグ
+	int animation[2];     //アニメーション画像
+	int animation_count;  //アニメーション時間
+	Vector2D direction;   //進行方向
 
 public:
-	Player();
-	~Player();
+	Harpy();
+	~Harpy();
 
 	//初期化処理
 	virtual void Initialize() override;
@@ -31,4 +31,3 @@ private:
 	//アニメーション制御
 	void AnimationControl();
 };
-

@@ -1,35 +1,38 @@
-#include "Enemy.h"
+#include "GoldEnemy.h"
 #include "DxLib.h"
 
-Enemy::Enemy() : animation_count(0), direction(0.0f)
+GoldEnemy::GoldEnemy() : animation_count(0), direction(0.0f)
 {
 	animation[0] = NULL;
 	animation[1] = NULL;
 }
 
-Enemy::~Enemy()
+GoldEnemy::~GoldEnemy()
 {
 
 }
 
 //初期化処理
-void Enemy::Initialize()
+void GoldEnemy::Initialize()
 {
 	//画像の読込み
-	animation[0] = LoadGraph("Resource/Images/BoxEnemy/1.png");
-	animation[1] = LoadGraph("Resource/Images/BoxEnemy/2.png");
+	animation[0] = LoadGraph("Resource/Images/GoldEnemy/1.png");
+	animation[1] = LoadGraph("Resource/Images/GoldEnemy/2.png");
+	animation[2] = LoadGraph("Resource/Images/GoldEnemy/3.png");
+	animation[3] = LoadGraph("Resource/Images/GoldEnemy/4.png");
+	animation[4] = LoadGraph("Resource/Images/GoldEnemy/5.png");
 
 	//エラーチェック
-	if (animation[0] == -1 || animation[1] == -1)
+	for (int i = 0; i < 5; i++)
 	{
-		throw("ハコテキの画像がありません\n");
+		if (animation[i] == -1)
+		{
+			throw("画像がありません\n");
+		}
 	}
 
 	//向きの設定
 	radian = 0.0f;
-
-	//当たり判定の大きさを設定
-	box_size = 64.0f;
 
 	//初期画像の設定
 	image = animation[0];
@@ -39,7 +42,7 @@ void Enemy::Initialize()
 }
 
 //更新処理
-void Enemy::Update()
+void GoldEnemy::Update()
 {
 	//移動処理
 	Movement();
@@ -49,7 +52,7 @@ void Enemy::Update()
 }
 
 //描画処理
-void Enemy::Draw() const
+void GoldEnemy::Draw() const
 {
 	//画像反転フラグ
 	int flip_flag = FALSE;
@@ -72,7 +75,7 @@ void Enemy::Draw() const
 }
 
 //終了時処理
-void Enemy::Finalize()
+void GoldEnemy::Finalize()
 {
 	//使用した画像を解放
 	DeleteGraph(animation[0]);
@@ -80,23 +83,22 @@ void Enemy::Finalize()
 }
 
 //当たり判定通知処理
-void Enemy::OnHitCollision(GameObject* hit_object)
+void GoldEnemy::OnHitCollision(GameObject* hit_object)
 {
 	//当たった時の処理
-	direction = 0.0f;
 }
 
 //移動処理
-void Enemy::Movement()
+void GoldEnemy::Movement()
 {
 	//画面端に到達したら、進行方向を反転する
 	if (((location.x + direction.x) < box_size.x) ||
-		(920.0f - box_size.x) < (location.x + direction.x))
+		(960.0f - box_size.x) < (location.x + direction.x))
 	{
 		direction.x *= -1.0f;
 	}
 	if (((location.y + direction.y) < box_size.y) ||
-		(580.0f - box_size.y) < (location.y + direction.y))
+		(660.0f - box_size.y) < (location.y + direction.y))
 	{
 		direction.y *= -1.0f;
 	}
@@ -106,7 +108,7 @@ void Enemy::Movement()
 }
 
 //アニメーション制御
-void Enemy::AnimationControl()
+void GoldEnemy::AnimationControl()
 {
 	//アニメーションカウントを加算する
 	animation_count++;
@@ -117,12 +119,12 @@ void Enemy::AnimationControl()
 		//カウントのリセット
 		animation_count = 0;
 
-		//画像の切替
+		//画像の切替(ハコテキ)
 		if (image == animation[0])
 		{
 			image = animation[1];
 		}
-		else
+		else if (image == animation[1])
 		{
 			image = animation[0];
 		}

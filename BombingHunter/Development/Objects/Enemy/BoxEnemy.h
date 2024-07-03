@@ -2,7 +2,7 @@
 
 #include "../GameObject.h"
 
-class Enemy : public GameObject
+class BoxEnemy : public GameObject
 {
 private:
 	int animation[2];     //アニメーション画像
@@ -10,8 +10,8 @@ private:
 	Vector2D direction;   //進行方向
 
 public:
-	Enemy();
-	~Enemy();
+	BoxEnemy();
+	~BoxEnemy();
 
 	//初期化処理
 	virtual void Initialize() override;

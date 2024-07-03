@@ -8,6 +8,8 @@ class Scene
 private:
 	std::vector<GameObject*>objects;   //オブジェクトリスト
 	int BackGround_image;   //背景
+	int GetRandMax;    //ランダム関数
+	int freamcount;    //フレームカウント
 
 public:
 	Scene();

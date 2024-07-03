@@ -1,13 +1,16 @@
 #include "Scene.h"
 #include "../Objects/Player/Player.h"
-#include "../Objects/Enemy/Enemy.h"
+#include "../Objects/Enemy/BoxEnemy.h"
+#include "../Objects/Enemy/WingEnemy.h"
+#include "../Objects/Enemy/Harpy.h"
+#include "../Objects/Enemy/GoldEnemy.h"
 #include "../Utility/InputControl.h"
 #include "DxLib.h"
 
 #define D_PIVOT_CENTER
 
 //コンストラクタ
-Scene::Scene() : objects(),BackGround_image(NULL)
+Scene::Scene() : objects(),BackGround_image(NULL), GetRandMax(0), freamcount(0)
 {
 
 }
@@ -23,8 +26,9 @@ Scene::~Scene()
 void Scene::Initialize()
 {
 	//プレイヤーを生成する
-	CreateObject<Player>(Vector2D(320.0f, 240.0f));
+	CreateObject<Player>(Vector2D(450.0f, 60.0f));
 
+	//背景画像
 	BackGround_image = LoadGraph("Resource/Images/BackGround.png");
 
 	//エラーチェック
@@ -53,16 +57,50 @@ void Scene::Update()
 		}
 	}
 
-	//zキーを押したら、敵を生成する
-	if (InputControl::GetKeyDown(KEY_INPUT_Z))
+	//フレームカウントを加算する
+	freamcount++;
+
+	//60フレーム目に到達したら
+	if (freamcount >= 60)
 	{
-		CreateObject<Enemy>(Vector2D(100.0f, 400.0f));
+		//カウントのリセット
+		freamcount = 0;
+
+		//ランダムに敵達が出現する
+		GetRandMax = GetRand(10);
+		{
+			//ハコテキ
+			if (GetRandMax <= 2)
+			{
+				CreateObject<BoxEnemy>(Vector2D(90.0f, 610.0f));
+			}
+
+			//ハネテキ
+			if (GetRandMax > 2  && GetRandMax <= 5)
+			{
+				CreateObject<WingEnemy>(Vector2D(90.0f, 270.0f));
+			}
+
+			//ハーピー
+			if (GetRandMax > 5 && GetRandMax <= 8)
+			{
+				CreateObject<Harpy>(Vector2D(90.0f, 400.0f));
+			}
+
+			//金テキ
+			if (GetRandMax > 8  && GetRandMax <= 10)
+			{
+				CreateObject<GoldEnemy>(Vector2D(90.0f, 610.0f));
+			}
+		}
 	}
+
 }
 
 //描画処理
 void Scene::Draw() const
-{
+{   
+	//背景画像
 	DrawGraph(0, 0, BackGround_image, TRUE);
 
 	//シーンに存在するオブジェクトの描画処理
