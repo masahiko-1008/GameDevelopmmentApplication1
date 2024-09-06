@@ -1,6 +1,7 @@
 ﻿#include "InGameScene.h"
 #include "../../Objects/Player/Player.h"
 #include "../../Objects/Enemy/EnemyBase.h"
+#include "../../Objects/Enemy/RedEnemy.h"
 #include "../../Objects/Wall/Wall.h"
 #include "../../Objects/Food/Food.h"
 #include "../../Objects/Food/PowerFood.h"
@@ -8,12 +9,17 @@
 #include "../../Utility/ResourceManager.h"
 #include "DxLib.h"
 #include <fstream>
+#include "../../Objects/Enemy/BlueEnemy.h"
+#include "../../Objects/Enemy/PinkEnemy.h"
+#include "../../Objects/Enemy/YellowEnemy.h"
 
-InGameScene::InGameScene() 
+InGameScene::InGameScene()
 	: player(nullptr)
+	, red(nullptr)
 	, back_ground_image(NULL)
 	, back_ground_sound(NULL)
 	, pause_flag(false)
+	, now_ijike(false)
 {
 
 }
@@ -44,7 +50,7 @@ void InGameScene::Initialize()
 eSceneType InGameScene::Update(const float& delta_second)
 {
 	InputManager* input = InputManager::GetInstance();
-	
+
 	if (input->GetKeyDown(KEY_INPUT_P) || input->GetButtonDown(XINPUT_BUTTON_START))
 	{
 		pause_flag = !pause_flag;
@@ -56,7 +62,7 @@ eSceneType InGameScene::Update(const float& delta_second)
 		__super::Update(delta_second);
 
 		// 全ての餌を食べたら、再スタート
-		if (player->GetFoodCount() >= 244)
+		if (player->GetFoodCount() >= 246)
 		{
 			return eSceneType::re_start;
 		}
@@ -65,6 +71,28 @@ eSceneType InGameScene::Update(const float& delta_second)
 		if (player->GetDestroy())
 		{
 			return eSceneType::re_start;
+		}
+
+		//敵をいじけ状態にする
+		if (player->GetPowerUp() == true)
+		{
+			if (now_ijike == false)
+			{
+				red->SetEnemyState();
+				now_ijike = true;
+			}
+
+		}
+		else
+		{
+			now_ijike = false;
+		}
+
+		//
+		if (red->SetPowerDown() == true)
+		{
+			//
+			player->SetPowerDown();
 		}
 	}
 
@@ -118,7 +146,7 @@ void InGameScene::CheckCollision(GameObjectBase* target, GameObjectBase* partner
 	// 当たり判定が有効か確認する
 	if (tc.IsCheckHitTarget(pc.object_type) || pc.IsCheckHitTarget(tc.object_type))
 	{
-		
+
 		// 線分の始点と終点を設定する
 		tc.point[0] += target->GetLocation();
 		tc.point[1] += target->GetLocation();
@@ -132,7 +160,7 @@ void InGameScene::CheckCollision(GameObjectBase* target, GameObjectBase* partner
 			target->OnHitCollision(partner);
 			partner->OnHitCollision(target);
 		}
-		
+
 	}
 }
 
@@ -175,23 +203,35 @@ void InGameScene::LoadStageMapCSV()
 		switch (mode)
 		{
 			// 壁
-			case '#':
-				generate_location = (Vector2D((float)(spos_x - 1), (float)(spos_y - 1)) * D_OBJECT_SIZE) + (D_OBJECT_SIZE / 2.0f);
-				CreateObject<Wall>(generate_location)->SetWallData(x_size, y_size);
-				break;
+		case '#':
+			generate_location = (Vector2D((float)(spos_x - 1), (float)(spos_y - 1)) * D_OBJECT_SIZE) + (D_OBJECT_SIZE / 2.0f);
+			CreateObject<Wall>(generate_location)->SetWallData(x_size, y_size);
+			break;
 			// プレイヤー
-			case 'P':
-				generate_location = (Vector2D((float)(spos_x - 1), (float)(spos_y - 1)) * D_OBJECT_SIZE) + (D_OBJECT_SIZE / 2.0f);
-				player = CreateObject<Player>(generate_location);
-				break;
+		case 'P':
+			generate_location = (Vector2D((float)(spos_x - 1), (float)(spos_y - 1)) * D_OBJECT_SIZE) + (D_OBJECT_SIZE / 2.0f);
+			player = CreateObject<Player>(generate_location);
+			break;
 			// エネミー
-			case 'E':
-				generate_location = (Vector2D((float)(spos_x - 1), (float)(spos_y - 1)) * D_OBJECT_SIZE) + (D_OBJECT_SIZE / 2.0f);
-				CreateObject<EnemyBase>(generate_location);
-				break;
+		case 'r':
+			generate_location = (Vector2D((float)(spos_x - 1), (float)(spos_y - 1)) * D_OBJECT_SIZE) + (D_OBJECT_SIZE / 2.0f);
+			red = CreateObject<RedEnemy>(generate_location);
+			break;
+		case 'p':
+			generate_location = (Vector2D((float)(spos_x - 1), (float)(spos_y - 1)) * D_OBJECT_SIZE) + (D_OBJECT_SIZE / 2.0f);
+			CreateObject<PinkEnemy>(generate_location); //PinkEnemy
+			break;
+		case 'b':
+			generate_location = (Vector2D((float)(spos_x - 1), (float)(spos_y - 1)) * D_OBJECT_SIZE) + (D_OBJECT_SIZE / 2.0f);
+			CreateObject<BlueEnemy>(generate_location);//BlueEnemy
+			break;
+		case 'y':
+			generate_location = (Vector2D((float)(spos_x - 1), (float)(spos_y - 1)) * D_OBJECT_SIZE) + (D_OBJECT_SIZE / 2.0f);
+			CreateObject<YellowEnemy>(generate_location);//YellowEnemy
+			break;//EnemyBase
 			// 上記以外
-			default:
-				break;
+		default:
+			break;
 		}
 
 	}

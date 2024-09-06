@@ -24,6 +24,10 @@ protected:
 	int					image;			// 画像情報
 	int					z_layer;		// レイヤー情報
 	eMobilityType		mobility;		// 可動性
+	int red_image;
+	int blue_image;
+	int pink_image;
+	int yellow_image;
 
 public:
 	GameObjectBase();
