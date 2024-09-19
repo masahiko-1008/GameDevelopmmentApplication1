@@ -1,4 +1,4 @@
-#include "EnemyBase.h"
+ï»¿#include "EnemyBase.h"
 #include "../../Utility/InputManager.h"
 #include "../../Utility/ResourceManager.h"
 #include "DxLib.h"
@@ -35,12 +35,12 @@ EnemyBase::~EnemyBase()
 
 void EnemyBase::Initialize()
 {
-	// ƒAƒjƒ[ƒVƒ‡ƒ“‰æ‘œ‚Ì“Ç‚İ‚İ
+	// ã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³ç”»åƒã®èª­ã¿è¾¼ã¿
 	ResourceManager* rm = ResourceManager::GetInstance();
 	eyes_animation = rm->GetImages("Resource/Images/eyes.png", 4, 4, 1, 32, 32);
 	eye_image = eyes_animation[1];
 
-	// “–‚½‚è”»’è‚Ìİ’è
+	// å½“ãŸã‚Šåˆ¤å®šã®è¨­å®š
 	collision.is_blocking = true;
 	collision.object_type = eObjectType::enemy;
 	collision.hit_object_type.push_back(eObjectType::player);
@@ -48,26 +48,26 @@ void EnemyBase::Initialize()
 
 	collision.radius = (D_OBJECT_SIZE - 1.0f) / 2.0f;
 
-	// ƒŒƒCƒ„[‚Ìİ’è
+	// ãƒ¬ã‚¤ãƒ¤ãƒ¼ã®è¨­å®š
 	z_layer = 5;
 
-	// ‰Â“®«‚Ìİ’è
+	// å¯å‹•æ€§ã®è¨­å®š
 	mobility = eMobilityType::Movable;
 
 	velocity = Vector2D(2.0f, 0.0f);
 
-	//‚¢‚¶‚¯‚éŠÔ
+	//ã„ã˜ã‘ã‚‹æ™‚é–“
 	ijike_time = 8.0f;
 }
 
 void EnemyBase::Update(float delta_second)
 {
-	// ƒvƒŒƒCƒ„[ó‘Ô‚É‚æ‚Á‚ÄA“®ì‚ğ•Ï‚¦‚é
+	// ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼çŠ¶æ…‹ã«ã‚ˆã£ã¦ã€å‹•ä½œã‚’å¤‰ãˆã‚‹
 	switch (enemy_state)
 	{
 	case eEnemyState::ENEMY_IJIKE:
 		Movement(delta_second);
-		// ˆÚ“®’†‚ÌƒAƒjƒ[ƒVƒ‡ƒ“
+		// ç§»å‹•ä¸­ã®ã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³
 		animation_time += delta_second;
 		if (animation_time >= (1.0f / 16.0f))
 		{
@@ -82,9 +82,9 @@ void EnemyBase::Update(float delta_second)
 		break;
 
 	case eEnemyState::ENEMY_MOVE:
-		// ˆÚ“®ˆ—
+		// ç§»å‹•å‡¦ç†
 		Movement(delta_second);
-		// ƒAƒjƒ[ƒVƒ‡ƒ“§Œä
+		// ã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³åˆ¶å¾¡
 		AnimationControl(delta_second);
 		break;
 
@@ -118,13 +118,13 @@ void EnemyBase::Update(float delta_second)
 
 void EnemyBase::Draw(const Vector2D& screen_offset) const
 {
-	//// eƒNƒ‰ƒX‚Ì•`‰æˆ—‚ğŒÄ‚Ño‚·
+	//// è¦ªã‚¯ãƒ©ã‚¹ã®æç”»å‡¦ç†ã‚’å‘¼ã³å‡ºã™
 	//__super::Draw(screen_offset);
 	Vector2D graph_location = this->location + screen_offset;
-	// ƒIƒtƒZƒbƒg’l‚ğŠî‚É‰æ‘œ‚Ì•`‰æ‚ğs‚¤
+	// ã‚ªãƒ•ã‚»ãƒƒãƒˆå€¤ã‚’åŸºã«ç”»åƒã®æç”»ã‚’è¡Œã†
 	if (enemy_state == eEnemyState::ENEMY_MOVE || enemy_state == eEnemyState::ENEMY_IJIKE)
 	{
-		// ƒIƒtƒZƒbƒg’l‚ğŠî‚É‰æ‘œ‚Ì•`‰æ‚ğs‚¤
+		// ã‚ªãƒ•ã‚»ãƒƒãƒˆå€¤ã‚’åŸºã«ç”»åƒã®æç”»ã‚’è¡Œã†
 		DrawRotaGraphF(graph_location.x, graph_location.y, 1.0, 0.0, red_image, TRUE);
 		DrawRotaGraphF(graph_location.x, graph_location.y, 1.0, 0.0, blue_image, TRUE);
 		DrawRotaGraphF(graph_location.x, graph_location.y, 1.0, 0.0, yellow_image, TRUE);
@@ -143,43 +143,43 @@ void EnemyBase::Draw(const Vector2D& screen_offset) const
 
 void EnemyBase::Finalize()
 {
-	// “®“I”z—ñ‚Ì‰ğ•ú
+	// å‹•çš„é…åˆ—ã®è§£æ”¾
 	move_animation.clear();
 	eyes_animation.clear();
 }
 
 /// <summary>
-/// “–‚½‚è”»’è’Ê’mˆ—
+/// å½“ãŸã‚Šåˆ¤å®šé€šçŸ¥å‡¦ç†
 /// </summary>
-/// <param name="hit_object">“–‚½‚Á‚½ƒQ[ƒ€ƒIƒuƒWƒFƒNƒg‚Ìƒ|ƒCƒ“ƒ^</param>
+/// <param name="hit_object">å½“ãŸã£ãŸã‚²ãƒ¼ãƒ ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã®ãƒã‚¤ãƒ³ã‚¿</param>
 void EnemyBase::OnHitCollision(GameObjectBase* hit_object)
 {
-	// “–‚½‚Á‚½AƒIƒuƒWƒFƒNƒg‚ª•Ç‚¾‚Á‚½‚ç
+	// å½“ãŸã£ãŸã€ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆãŒå£ã ã£ãŸã‚‰
 	if (hit_object->GetCollision().object_type == eObjectType::wall)
 	{
-		// “–‚½‚è”»’èî•ñ‚ğæ“¾‚µ‚ÄAƒJƒvƒZƒ‹‚ª‚ ‚éˆÊ’u‚ğ‹‚ß‚é
+		// å½“ãŸã‚Šåˆ¤å®šæƒ…å ±ã‚’å–å¾—ã—ã¦ã€ã‚«ãƒ—ã‚»ãƒ«ãŒã‚ã‚‹ä½ç½®ã‚’æ±‚ã‚ã‚‹
 		CapsuleCollision hc = hit_object->GetCollision();
 		hc.point[0] += hit_object->GetLocation();
 		hc.point[1] += hit_object->GetLocation();
 
-		// Å‹ß–T“_‚ğ‹‚ß‚é
+		// æœ€è¿‘å‚ç‚¹ã‚’æ±‚ã‚ã‚‹
 		Vector2D near_point = NearPointCheck(hc, this->location);
 
-		// Player‚©‚çnear_point‚Ö‚Ì•ûŒüƒxƒNƒgƒ‹‚ğæ“¾
+		// Playerã‹ã‚‰near_pointã¸ã®æ–¹å‘ãƒ™ã‚¯ãƒˆãƒ«ã‚’å–å¾—
 		Vector2D dv2 = near_point - this->location;
 		Vector2D dv = this->location - near_point;
 
-		// ‚ß‚è‚ñ‚¾·•ª
+		// ã‚ã‚Šè¾¼ã‚“ã å·®åˆ†
 		float diff = (this->GetCollision().radius + hc.radius) - dv.Length();
 
-		// diff‚Ì•ª‚¾‚¯–ß‚é
+		// diffã®åˆ†ã ã‘æˆ»ã‚‹
 		location += dv.Normalize() * diff;
 
 		//
 		velocity *= -1;
 	}
 
-	//// “–‚½‚Á‚½AƒIƒuƒWƒFƒNƒg‚ª’Êí‰a‚¾‚Á‚½‚ç
+	//// å½“ãŸã£ãŸã€ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆãŒé€šå¸¸é¤Œã ã£ãŸã‚‰
 	if (hit_object->GetCollision().object_type == eObjectType::player && enemy_state == eEnemyState::ENEMY_IJIKE)
 	{
 		is_ijike = false;
@@ -209,22 +209,22 @@ bool EnemyBase::SetPowerDown()
 }
 
 /// <summary>
-/// ˆÚ“®ˆ—
+/// ç§»å‹•å‡¦ç†
 /// </summary>
-/// <param name="delta_second">1ƒtƒŒ[ƒ€‚ ‚½‚è‚ÌŠÔ</param>
+/// <param name="delta_second">1ãƒ•ãƒ¬ãƒ¼ãƒ ã‚ãŸã‚Šã®æ™‚é–“</param>
 void EnemyBase::Movement(float delta_second)
 {
-	//// ˆÚ“®—Ê‚©‚çˆÚ“®•ûŒü‚ğXV
+	//// ç§»å‹•é‡ã‹ã‚‰ç§»å‹•æ–¹å‘ã‚’æ›´æ–°
 	//if (Vector2D::Distance(old_location, location) == 0.0f)
 	//{
-	//	// ˆÚ“®‚ª‚È‚¯‚ê‚Î direction_state ‚ğ•ÏX‚·‚é
+	//	// ç§»å‹•ãŒãªã‘ã‚Œã° direction_state ã‚’å¤‰æ›´ã™ã‚‹
 	//	velocity = 0.0f;
 	//	now_direction_state = next_direction_state;
 	//	next_direction_state = eDirectionState::ENEMY_RIGHT;
 	//}
 	//else
 	//{
-	//	// ˆÚ“®•ûŒü‚ÉˆÚ“®‚µ‚Ä‚¢‚È‚¯‚ê‚Î direction_state ‚ğ•ÏX‚·‚é
+	//	// ç§»å‹•æ–¹å‘ã«ç§»å‹•ã—ã¦ã„ãªã‘ã‚Œã° direction_state ã‚’å¤‰æ›´ã™ã‚‹
 	//	switch (now_direction_state)
 	//	{
 	//	case eDirectionState::ENEMY_UP:
@@ -234,7 +234,7 @@ void EnemyBase::Movement(float delta_second)
 	//		if (((now_direction_state == eDirectionState::ENEMY_UP) && (diff < 0.0f)) ||
 	//			((now_direction_state == eDirectionState::ENEMY_DOWN) && (0.0f < diff)))
 	//		{
-	//			// ˆÚ“®•ûŒü‚ÉˆÚ“®‚µ‚Ä‚é‚Ì‚Å break
+	//			// ç§»å‹•æ–¹å‘ã«ç§»å‹•ã—ã¦ã‚‹ã®ã§ break
 	//			break;
 	//		}
 
@@ -252,7 +252,7 @@ void EnemyBase::Movement(float delta_second)
 	//		if (((now_direction_state == eDirectionState::ENEMY_LEFT) && (diff < 0.0f)) ||
 	//			((now_direction_state == eDirectionState::ENEMY_RIGHT) && (0.0f < diff)))
 	//		{
-	//			// ˆÚ“®•ûŒü‚ÉˆÚ“®‚µ‚Ä‚é‚Ì‚Å break
+	//			// ç§»å‹•æ–¹å‘ã«ç§»å‹•ã—ã¦ã‚‹ã®ã§ break
 	//			break;
 	//		}
 
@@ -262,18 +262,18 @@ void EnemyBase::Movement(float delta_second)
 	//	}
 	//	break;
 
-	//	default:// ‰½‚à‚µ‚È‚¢
+	//	default:// ä½•ã‚‚ã—ãªã„
 	//		break;
 	//	}
 	//}
 
-	//// “ü—Íó‘Ô‚Ìæ“¾
+	//// å…¥åŠ›çŠ¶æ…‹ã®å–å¾—
 	//InputManager* input = InputManager::GetInstance();
 
-	//// Œ»İƒpƒlƒ‹‚Ìó‘Ô‚ğŠm”F
+	//// ç¾åœ¨ãƒ‘ãƒãƒ«ã®çŠ¶æ…‹ã‚’ç¢ºèª
 	//ePanelID panel = StageData::GetPanelData(location);
 
-	// //“ü—Í‚©‚çˆÚ“®•ûŒü‚ğİ’è
+	// //å…¥åŠ›ã‹ã‚‰ç§»å‹•æ–¹å‘ã‚’è¨­å®š
 	///*if (input->GetKeyDown(KEY_INPUT_UP) || input->GetButtonDown(XINPUT_BUTTON_DPAD_UP))
 	//{
 	//	switch (now_direction_state)
@@ -335,7 +335,7 @@ void EnemyBase::Movement(float delta_second)
 	//	}
 	//}*/
 
-	// //is•ûŒü‚ÌˆÚ“®—Ê‚ğ’Ç‰Á
+	// //é€²è¡Œæ–¹å‘ã®ç§»å‹•é‡ã‚’è¿½åŠ 
 	//switch (now_direction_state)
 	//{
 	//case EnemyBase::ENEMY_UP:
@@ -357,7 +357,7 @@ void EnemyBase::Movement(float delta_second)
 	//	break;
 	//}
 
-	//// æs“ü—Í‚ÌˆÚ“®—Ê‚ğ’Ç‰Á
+	//// å…ˆè¡Œå…¥åŠ›ã®ç§»å‹•é‡ã‚’è¿½åŠ 
 	//if ((panel != ePanelID::NONE)
 	//	&& (old_panel != panel))
 	//{
@@ -380,16 +380,16 @@ void EnemyBase::Movement(float delta_second)
 	//	}
 	//}
 
-	// //‘O‰ñÀ•W‚ÌXV
+	// //å‰å›åº§æ¨™ã®æ›´æ–°
 	//old_location = location;
 
-	//// ‘O‰ñƒpƒlƒ‹‚ÌXV
+	//// å‰å›ãƒ‘ãƒãƒ«ã®æ›´æ–°
 	//old_panel = panel;
 
-	 //ˆÚ“®—Ê * ‘¬‚³ * ŠÔ ‚ÅˆÚ“®æ‚ğŒˆ’è‚·‚é
+	 //ç§»å‹•é‡ * é€Ÿã• * æ™‚é–“ ã§ç§»å‹•å…ˆã‚’æ±ºå®šã™ã‚‹
 	location += velocity * D_PLAYER_SPEED * delta_second;
 
-	// //‰æ–ÊŠO‚És‚Á‚½‚çA”½‘Î‘¤‚Éƒ[ƒv‚³‚¹‚é
+	// //ç”»é¢å¤–ã«è¡Œã£ãŸã‚‰ã€åå¯¾å´ã«ãƒ¯ãƒ¼ãƒ—ã•ã›ã‚‹
 	//if (location.x < 0.0f)
 	//{
 	//	old_location.x = 672.0f;
@@ -405,14 +405,14 @@ void EnemyBase::Movement(float delta_second)
 }
 
 /// <summary>
-/// ƒAƒjƒ[ƒVƒ‡ƒ“§Œä
+/// ã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³åˆ¶å¾¡
 /// </summary>
-/// <param name="delta_second">1ƒtƒŒ[ƒ€‚ ‚½‚è‚ÌŠÔ</param>
+/// <param name="delta_second">1ãƒ•ãƒ¬ãƒ¼ãƒ ã‚ãŸã‚Šã®æ™‚é–“</param>
 void EnemyBase::AnimationControl(float delta_second)
 {
 	if (enemy_state == eEnemyState::ENEMY_MOVE)
 	{
-		// ˆÚ“®’†‚ÌƒAƒjƒ[ƒVƒ‡ƒ“
+		// ç§»å‹•ä¸­ã®ã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³
 		animation_time += delta_second;
 		if (animation_time >= (1.0f / 16.0f))
 		{

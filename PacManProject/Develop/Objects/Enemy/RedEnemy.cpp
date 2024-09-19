@@ -1,4 +1,4 @@
-#include "RedEnemy.h"
+ï»¿#include "RedEnemy.h"
 #include "../../Utility/ResourceManager.h"
 
 
@@ -43,7 +43,7 @@ void RedEnemy::Animation(float delta_second)
 {
 	__super::AnimationControl(delta_second);
 
-	// ˆÚ“®’†‚ÌƒAƒjƒ[ƒVƒ‡ƒ“
+	// ç§»å‹•ä¸­ã®ã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³
 	/*animation_time += delta_second;
 	if (animation_time >= (1.0f / 16.0f))
 	{
